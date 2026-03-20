@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form with RegEx Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+        input {
+            padding: 8px;
+            margin: 10px;
+            width: 250px;
+        }
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Login Page</h2>
+
+    <form onsubmit="return validateForm()">
+        <input type="text" id="email" placeholder="Enter Email"><br>
+        <span id="emailError" class="error"></span><br>
+
+        <input type="password" id="password" placeholder="Enter Password"><br>
+        <span id="passwordError" class="error"></span><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        function validateForm() {
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let message = document.getElementById("message");
+
+            emailError.innerText = "";
+            passwordError.innerText = "";
+            message.innerText = "";
+
+            // Email Regex
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            // Password Regex
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+            let isValid = true;
+
+            if (!emailPattern.test(email)) {
+                emailError.innerText = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            if (!passwordPattern.test(password)) {
+                passwordError.innerText = "Password must be 8+ chars, include upper, lower, number & special character.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                message.innerHTML = "<p class='success'>Login Successful!</p>";
+            }
+
+            return false; // Prevent actual form submission for demo
+        }
+    </script>
+
+</body>
+</html>
